@@ -21,27 +21,22 @@ text_sec = StringVar()
 text_min = StringVar()
 text_sec.set("0")
 text_min.set("0")
-#timeLabel = Label(root, textvariable=time)
 
 start_stop_button = StringVar()
 start_stop_button.set("START")
 
 start = True
-stop = True
-check = False
+stop = False
+check = True
 
 def start():
-    global input_sec,input_min,start,stop,check,value_time
+    global input_sec,input_min,start,stop,check
     start = False
     if stop == True and check == True:
         start = True
         start_stop_button.set("STOP")
         timer()
-    elif stop == False and check == True:
-        # count_sec = int(text_sec.get())
-        # count_min = int(text_min.get())
-        # text_sec.set("0")
-        # text_min.set("0")
+    elif stop == True and check == False:
         text_sec.set(int(text_sec.get()))
         text_min.set(int(text_min.get()))
         check = True
@@ -50,17 +45,12 @@ def start():
         start = True
         stop = True
         start_stop_button.set("STOP")
-        text_sec.set(int(text_sec.get()))
-        text_min.set(int(text_min.get()))
-        maximum_time = int(text_min.get())*60+int(text_sec.get())
-        #print(maximum_time)
-        value_time = 0
-        div_time = 1
-        #progressbar.configure(maximum=maximum_time,value=value_time)
+        text_sec.set(int(input_sec.get()))
+        text_min.set(int(input_min.get()))
         timer()
     
 def timer():
-    global start,text_sec,text_min,check,value_time,div_time
+    global start,text_sec,text_min,check
     if start == True:
         if int(text_sec.get()) == 0 and int(text_min.get()) == 0:
             pass
@@ -71,8 +61,6 @@ def timer():
             if time_min >= 0:
                 time_sec -= 1
                 text_sec.set(str(time_sec))
-                value_time += 1
-                #progressbar.configure(value=value_time)
                 root.after(1000,timer)
                 if time_sec == -1:
                     time_min -= 1
@@ -88,8 +76,8 @@ def timer():
 def stop():
     global start,stop,check
     start = True
-    check = True
     stop = False
+    check = True
     time_sec = 0
     time_min = 0
     text_sec.set(str(time_sec))
@@ -101,19 +89,19 @@ labbel.grid(row=0,column=0,columnspan=1)
 entry=Entry(root,width=2,font=my_font,textvariable=input_min)
 entry.grid(row=0,column=1)
 
-label_min=Label(root,text=u"分")
+label_min=Label(root,text="分")
 label_min.grid(row=0,column=2)
 
 entry1=Entry(root,width=2,font=my_font,textvariable=input_sec)
 entry1.grid(row=0,column=3)
 
-label_sec=Label(root,text=u"秒")
+label_sec=Label(root,text="秒")
 label_sec.grid(row=0,column=4)
 
 button=Button(root,textvariable=start_stop_button,command=start)
 button.grid(row=0,column=5)
 
-button=Button(root,text=u"RESET",command=stop)
+button=Button(root,text="RESET",command=stop)
 button.grid(row=0,column=6)
 
 labbel=Label(root,text="タイマー")
@@ -130,22 +118,5 @@ labbel.grid(row=1,column=3,columnspan=1)
 
 labbel=Label(root,text="秒")
 labbel.grid(row=1,column=4,columnspan=1)
-
-
-
-
-
-# #ラベルの配置
-# #timeLabel.pack()
-
-# #ボタンの作成
-# startButton = Button(root, text="開始")
-# stopButton = Button(root, text="一時停止")
-# cancelButton = Button(root, text="キャンセル")
-
-# #ボタンの配置
-# startButton.pack()
-# stopButton.pack()
-# cancelButton.pack()
 
 root.mainloop()
