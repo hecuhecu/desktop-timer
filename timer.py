@@ -8,12 +8,13 @@ root = Tk()
 #ウィンドウタイトルとサイズを設定
 root.title("TIMER")
 root.geometry("500x100")
+root.attributes("-topmost", True)
 
 #入力
 input_sec = StringVar()
 input_min = StringVar()
 input_sec.set("0")
-input_min.set("30")
+input_min.set("1")
 my_font=font.Font(size=20)
 
 #時間の表示
@@ -72,6 +73,7 @@ def timer():
                     text_sec.set("59")
             if int(text_sec.get()) == 0 and int(text_min.get()) == 0:
                 start = False
+                start_stop_button.set("START")
                 time_min = 0
                 time_sec = 0
                 text_sec.set(str(time_sec))
