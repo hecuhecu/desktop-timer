@@ -7,7 +7,7 @@ from tkinter import messagebox
 root = Tk()
 
 #ウィンドウタイトルとサイズを設定
-root.title("TIMER")
+root.title("タイマー")
 root.geometry("500x100")
 root.attributes("-topmost", True)
 
@@ -25,7 +25,7 @@ text_sec.set("0")
 text_min.set("0")
 
 start_stop_button = StringVar()
-start_stop_button.set("START")
+start_stop_button.set("開始")
 
 #動いていない（スタートが無効,ストップが有効）
 start = False
@@ -38,20 +38,20 @@ def tap_start_stop():
     if start == False and stop == True and initial_startup == False:
         start = True
         stop = False
-        start_stop_button.set("STOP")
+        start_stop_button.set("一時停止")
         button1["state"] = DISABLED
         timer()
     elif start == True and stop == False and initial_startup == False:
         start = False
         stop = True
-        start_stop_button.set("START")
+        start_stop_button.set("開始")
         button1["state"] = NORMAL
         timer()
     else:
         start = True
         stop = False
         initial_startup = False
-        start_stop_button.set("STOP")
+        start_stop_button.set("一時停止")
         text_sec.set(int(input_sec.get()))
         text_min.set(int(input_min.get()))
         timer()
@@ -74,7 +74,7 @@ def timer():
                     text_sec.set("59")
             if int(text_sec.get()) == 0 and int(text_min.get()) == 0:
                 start = False
-                start_stop_button.set("START")
+                start_stop_button.set("開始")
                 messagebox.showwarning("終了", "時間になりました")
                 time_min = 0
                 time_sec = 0
@@ -91,6 +91,11 @@ def stop():
     time_min = 0
     text_sec.set(str(time_sec))
     text_min.set(str(time_min))
+
+def slider_scroll(val):
+    window_transparency = 1 - int(val)/100
+    print(window_transparency)
+    root.attributes("-alpha",window_transparency)
 
 labbel=Label(root,text="設定")
 labbel.grid(row=0,column=0,columnspan=1)
@@ -110,7 +115,7 @@ label_sec.grid(row=0,column=4)
 button=Button(root,textvariable=start_stop_button,command=tap_start_stop)
 button.grid(row=0,column=5)
 
-button1=Button(root,text="RESET",state=DISABLED,command=stop)
+button1=Button(root,text="リセット",state=DISABLED,command=stop)
 button1.grid(row=0,column=6)
 
 labbel=Label(root,text="タイマー")
@@ -127,5 +132,11 @@ labbel.grid(row=1,column=3,columnspan=1)
 
 labbel=Label(root,text="秒")
 labbel.grid(row=1,column=4,columnspan=1)
+
+scale = Scale(root,orient=HORIZONTAL,command=slider_scroll)
+scale.grid(row=1,column=6)
+
+label=Label(root, text="透明度")
+label.grid(row=1,column=7)
 
 root.mainloop()
