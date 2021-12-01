@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
+from tkinter import messagebox
 
 #メインウィンドウ作成
 root = Tk()
@@ -74,6 +75,7 @@ def timer():
             if int(text_sec.get()) == 0 and int(text_min.get()) == 0:
                 start = False
                 start_stop_button.set("START")
+                messagebox.showwarning("終了", "時間になりました")
                 time_min = 0
                 time_sec = 0
                 text_sec.set(str(time_sec))
