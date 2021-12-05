@@ -92,51 +92,52 @@ def stop():
     text_sec.set(str(time_sec))
     text_min.set(str(time_min))
 
-def slider_scroll(val):
-    window_transparency = 1 - int(val)/100
-    print(window_transparency)
+def slider_scroll(self):
+    window_transparency = 1 - val.get()/100
     root.attributes("-alpha",window_transparency)
 
-labbel=Label(root,text="設定")
+labbel = ttk.Label(root,text="設定")
 labbel.grid(row=0,column=0,columnspan=1)
     
-entry=Entry(root,width=2,font=my_font,textvariable=input_min)
+entry = ttk.Entry(root,width=2,font=my_font,textvariable=input_min)
 entry.grid(row=0,column=1)
 
-label_min=Label(root,text="分")
+label_min = ttk.Label(root,text="分")
 label_min.grid(row=0,column=2)
 
-entry1=Entry(root,width=2,font=my_font,textvariable=input_sec)
+entry1 = ttk.Entry(root,width=2,font=my_font,textvariable=input_sec)
 entry1.grid(row=0,column=3)
 
-label_sec=Label(root,text="秒")
+label_sec = ttk.Label(root,text="秒")
 label_sec.grid(row=0,column=4)
 
-button=Button(root,textvariable=start_stop_button,command=tap_start_stop)
+button = ttk.Button(root,textvariable=start_stop_button,command=tap_start_stop)
 button.grid(row=0,column=5)
 
-button1=Button(root,text="リセット",state=DISABLED,command=stop)
+button1 = ttk.Button(root,text="リセット",state=DISABLED,command=stop)
 button1.grid(row=0,column=6)
 
-labbel=Label(root,text="タイマー")
+labbel = ttk.Label(root,text="タイマー")
 labbel.grid(row=1,column=0,columnspan=1)
 
-labbel=Label(root,font=my_font,textvariable=text_min)
+labbel = ttk.Label(root,font=my_font,textvariable=text_min)
 labbel.grid(row=1,column=1,columnspan=1)
 
-labbel=Label(root,text="分")
+labbel = ttk.Label(root,text="分")
 labbel.grid(row=1,column=2,columnspan=1)
 
-labbel=Label(root,font=my_font,textvariable=text_sec)
+labbel = ttk.Label(root,font=my_font,textvariable=text_sec)
 labbel.grid(row=1,column=3,columnspan=1)
 
-labbel=Label(root,text="秒")
+labbel = ttk.Label(root,text="秒")
 labbel.grid(row=1,column=4,columnspan=1)
 
-scale = Scale(root,orient=HORIZONTAL,command=slider_scroll)
-scale.grid(row=1,column=6)
+val = DoubleVar()
+scale = ttk.Scale(root,variable=val,from_=0,to=100,command=slider_scroll)
+scale.grid(row=1,column=5
+)
 
-label=Label(root, text="透明度")
-label.grid(row=1,column=7)
+label = ttk.Label(root, text="透明度")
+label.grid(row=1,column=6)
 
 root.mainloop()
